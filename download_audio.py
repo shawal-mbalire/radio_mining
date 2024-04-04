@@ -2,8 +2,9 @@ import requests
 import os
 
 # Define file paths and URL
-audio_url = "https://storage.googleapis.com/radiofilez/english/sunday/cp_91_3-2022-11-27_T06.00.01.mp3"
-audio_file_path = "downloaded_audio.mp3"
+# audio_url = "https://storage.googleapis.com/radiofilez/english/sunday/cp_91_3-2022-11-27_T06.00.01.mp3"
+audio_url = "https://storage.googleapis.com/radiofilez/english/saturday/kfm_93_3-2022-11-26_T11.00.01.mp3"
+audio_file_path = "downloaded_audio1.mp3"
 
 
 # Download the audio file

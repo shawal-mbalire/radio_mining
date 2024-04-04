@@ -1,3 +1,5 @@
 output_chunks/*
 noise_reduced_chunks/*
 *.mp3
+segment_audio1.py
+download_audio1.py
