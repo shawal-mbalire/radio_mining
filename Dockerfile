@@ -4,10 +4,13 @@ FROM python:3.8-slim
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Clone the public repository
+# Install system dependencies
 RUN apt-get update && \
-    apt-get install -y git && \
-    git clone https://github.com/Marconi-Lab/radio_mining.git .
+    apt-get install -y git ffmpeg && \
+    rm -rf /var/lib/apt/lists/*  # Clean up
+
+# Clone the public repository
+RUN git clone https://github.com/Marconi-Lab/radio_mining.git .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
