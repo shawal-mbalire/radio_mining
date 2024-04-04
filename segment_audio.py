@@ -4,10 +4,17 @@ import numpy as np
 import noisereduce as nr
 from scipy.io.wavfile import read
 import io
+import whisper
 
-output_dir = "output_chunks"
-audio_file_path = 'downloaded_audio.mp3'
-noise_reduced_dir = "noise_reduced_chunks"
+# output_dir = "output_chunks"
+# audio_file_path = 'downloaded_audio.mp3'
+# noise_reduced_dir = "noise_reduced_chunks"
+
+output_dir = "output_chunks1"
+audio_file_path = 'downloaded_audio1.mp3'
+noise_reduced_dir = "noise_reduced_chunks1"
+
+model = whisper.load_model("base")
 
 os.makedirs(output_dir, exist_ok=True)
 os.makedirs(noise_reduced_dir, exist_ok=True)
@@ -19,6 +26,11 @@ def audiosegment_to_librosawav(segment):
     out_f.seek(0)
     rate, data = read(out_f)
     return rate, data
+
+def transcribe_audio_segment(segment_file_path, model=model):
+    """Transcribe audio segment using Whisper"""
+    result = model.transcribe(segment_file_path)
+    return result["text"]
 
 def split_audio_file(audio_file_path, output_dir, segment_duration_s=150):
     """Split audio file into segments and save them."""
@@ -51,8 +63,12 @@ def split_audio_file(audio_file_path, output_dir, segment_duration_s=150):
         noise_reduced_segment = AudioSegment(reduced_noise.tobytes(), frame_rate=rate, sample_width=reduced_noise.dtype.itemsize, channels=1)
         noise_reduced_segment_path = os.path.join(noise_reduced_dir, f"segment_{i + 1}_reduced_noise.mp3")
         noise_reduced_segment.export(noise_reduced_segment_path, format="mp3")
-        print(f"Noise-reduced segment file saved: {noise_reduced_segment_path}")
+        # print(f"Noise-reduced segment file saved: {noise_reduced_segment_path}")
         yield segment_file_path,noise_reduced_segment_path
 
 for segment_file_path, noise_reduced_segment_path in split_audio_file(audio_file_path, output_dir):
     print(f"Segment file saved: {segment_file_path}")
+    print(f"Noise-reduced segment file saved: {noise_reduced_segment_path}")
+    transcription = transcribe_audio_segment(noise_reduced_segment_path)
+    print(f"Transcription for {noise_reduced_segment_path}:")
+    print(transcription)
