@@ -5,14 +5,26 @@ import noisereduce as nr
 from scipy.io.wavfile import read
 import io
 import whisper
+import requests
 
 # output_dir = "output_chunks"
 # audio_file_path = 'downloaded_audio.mp3'
 # noise_reduced_dir = "noise_reduced_chunks"
 
-output_dir = "output_chunks1"
-audio_file_path = 'downloaded_audio1.mp3'
-noise_reduced_dir = "noise_reduced_chunks1"
+output_dir = "output_chunks"
+audio_file_path = 'downloaded_audio.mp3'
+noise_reduced_dir = "noise_reduced_chunks"
+audio_url = "https://storage.googleapis.com/radiofilez/english/saturday/kfm_93_3-2022-11-26_T11.00.01.mp3"
+
+if not os.path.exists(audio_file_path):
+    response = requests.get(audio_url, allow_redirects=True)
+
+    if response.status_code == 200:
+        with open(audio_file_path, 'wb') as f:
+            f.write(response.content)
+        print(f"Audio file downloaded successfully: {audio_file_path}")
+    else:
+        print(f"Failed to download audio file: {response.status_code}")
 
 model = whisper.load_model("base")
 
