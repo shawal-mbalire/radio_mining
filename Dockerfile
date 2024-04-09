@@ -22,4 +22,8 @@ EXPOSE 80
 ENV NAME World
 
 # Run app.py when the container launches
-CMD ["python", "segment_audio.py"]
+# CMD ["python", "segment_audio.py"] 
+# only one cmd command
+# lets run bash instead and run segment audio later
+# running bash keeps the container on to be execed into
+CMD ["bash"]
