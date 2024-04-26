@@ -21,5 +21,5 @@ docker run -t -d --name radiomining containerradio:v1
 connect to the docker container to run commands inside it
 
 ```bash
-docker exec -it radio bash
+docker exec -it radiomining bash
 ```
