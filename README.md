@@ -1,5 +1,11 @@
 # radio_mining
 
+Clone download the dockerfile
+
+```bash
+wget https://raw.githubusercontent.com/shawal-mbalire/radio_mining/main/Dockerfile
+```
+
 Build the container from the dockerfile
 
 ```bash
