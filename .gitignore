@@ -167,5 +167,7 @@ cython_debug/
 #.idea/
 downloaded_audio.mp3
 *.mp3
+/downloaded_audio.mp3
 output_chunks/
+
 noise_reduced_chunks/
